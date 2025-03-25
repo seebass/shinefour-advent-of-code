@@ -1,7 +1,13 @@
-import { readText } from "./utils/read-text.js";
 import { count, sum } from "ramda";
+import { readFileSync } from "node:fs";
 
-const text = readText("02");
+export function readText(demo = false) {
+  return readFileSync(`./${demo ? "demo" : "challenge"}.txt`, {
+    encoding: "utf8",
+  });
+}
+
+const text = readText();
 
 function createLines() {
   return text
@@ -31,7 +37,7 @@ function isReportSafe(numArray) {
   return isAscending || isDescending;
 }
 
-function a() {
+function partOne() {
   const reports = createLines();
   return count(isReportSafe, reports);
 }
@@ -48,7 +54,7 @@ function* variationGenerator(report) {
   }
 }
 
-function b() {
+function partTwo() {
   const reports = createLines();
   const results = reports.map((report) => {
     const variations = variationGenerator(report);
@@ -62,4 +68,5 @@ function b() {
   return sum(results);
 }
 
-export const day02 = { a, b };
+console.log("Part One", partOne());
+console.log("Part Two", partTwo());

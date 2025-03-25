@@ -1,0 +1,3 @@
+- Install latest Node.js
+- Run `npm install`
+- Run `npm start`
