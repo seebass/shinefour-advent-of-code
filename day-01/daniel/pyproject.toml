@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "advent_of_code"
+version = "0.0.1"
+dependencies = []
+
+[project.scripts]
+run-part-1 = "part1.solution:main"
+run-part-2 = "part2.solution:main"
