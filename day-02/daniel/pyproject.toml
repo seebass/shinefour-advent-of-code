@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "advent_of_code_day02"
+version = "0.0.1"
+dependencies = []
+
+[project.scripts]
+solve1 = "part1.solution:main"
+solve2 = "part2.solution:main"
