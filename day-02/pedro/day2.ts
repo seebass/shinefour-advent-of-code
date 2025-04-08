@@ -60,6 +60,14 @@ function getSafeReports(useDampener = false) {
                 skippedByDampener = true;
             }
 
+            if (index===1 && unsafeWithDampenerValue1 && unsafeWithDampenerValue2) {
+                const unsafeStep = isStepUnSafe(value1, value2, !direction);
+                if (!unsafeStep) {
+                    direction = !direction;
+                    return false;
+                }
+            }
+
             return unsafeWithDampenerValue1 && unsafeWithDampenerValue2;
         });
     
