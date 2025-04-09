@@ -3,7 +3,8 @@ import java.util.regex.Pattern;
 
 public class Day3Part1 {
 
-    private static final String MUL_PATTERN = ("(mul\\((\\d{1,3}),(\\d{1,3})\\))");
+    private static final String DIGIT_PATTERN = "(\\d{1,3})";
+    private static final String MUL_PATTERN = "mul\\(" + DIGIT_PATTERN + "," + DIGIT_PATTERN + "\\)";
 
     public static void main(String[] args) {
 
