@@ -1,9 +1,7 @@
-from itertools import chain
-import json
 import re
-from input import read as readInput
+from input import read as read_input
 
-memory = readInput()
+memory = read_input()
 
 
 def extract_operands(memory: str) -> list[(int, int)]:
