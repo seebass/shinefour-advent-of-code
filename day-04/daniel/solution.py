@@ -1,27 +1,18 @@
-from locations import Location, Directions
-from helpers import is_inside_word_search, get_letter_at, get_every_location
-
-
-def search_word_from(
-    start: Location, search_term: str, direction: Directions
-) -> list[Location]:
-    letter_locations: list[Location] = []
-    current = Location(start.row, start.column)
-    for searched_letter in search_term:
-        found_letter = get_letter_at(current)
-        if not found_letter == searched_letter:
-            break
-        letter_locations.append(Location(current.row, current.column))
-        current.move(direction)
-
-    return letter_locations if len(letter_locations) == len(search_term) else None
+from locations import Location, Directions, SearchInstruction
+from utils import (
+    is_inside_word_search,
+    get_letter_at,
+    get_every_location,
+    search_word_from,
+)
 
 
 def find_xmas():
-    start_locations = get_every_location()
+    all_locations = get_every_location()
+    x_locations = [l for l in all_locations if get_letter_at(l) == "X"]
     nested_results = [
         search_word_from(start=l, direction=d, search_term="XMAS")
-        for l in start_locations
+        for l in x_locations
         for d in Directions
     ]
     return [r for r in nested_results if r != None]
@@ -31,7 +22,7 @@ locations = find_xmas()
 print(f"Solution to part 1: {len(locations)}")
 
 
-def get_cross_searches(a_location: Location):
+def get_cross_searches(a_location: Location) -> list[SearchInstruction]:
     searches = [
         (Directions.UP_LEFT, Directions.DOWN_RIGHT),
         (Directions.UP_RIGHT, Directions.DOWN_LEFT),
@@ -40,13 +31,13 @@ def get_cross_searches(a_location: Location):
     ]
     row, column = a_location.row, a_location.column
     start_locations = [
-        (Location(row, column).move(start_from), search_to)
+        SearchInstruction(Location(row, column).move(start_from), search_to)
         for start_from, search_to in searches
     ]
     return [l for l in start_locations if is_inside_word_search(l[0])]
 
 
-def is_crossing(searches: list[tuple[Location, Directions]]):
+def is_crossing(searches: list[SearchInstruction]):
     results = [
         search_word_from(start=s, direction=d, search_term="MAS") for s, d in searches
     ]

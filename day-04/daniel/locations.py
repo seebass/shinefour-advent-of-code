@@ -10,6 +10,11 @@ class RelativeLocation(NamedTuple):
     column_movement: int = 0
 
 
+class SearchInstruction(NamedTuple):
+    start: Location
+    direction: Directions
+
+
 class Directions(Enum):
     UP = RelativeLocation(-1, 0)
     UP_RIGHT = RelativeLocation(-1, 1)
