@@ -1,4 +1,4 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Day5Part2 {
@@ -1443,17 +1443,49 @@ public class Day5Part2 {
     }
 
     private static List<Integer> applyRules(final List<IntegerTupel> rules, final List<Integer> line) {
-        return line.stream().sorted((first, second) -> {
-            for (IntegerTupel rule : rules) {
-                if (rule.getFirst() == first && rule.getSecond() == second) {
-                    return -1;
-                }
-                if (rule.getFirst() == second && rule.getSecond() == first) {
-                    return 1;
-                }
+        List<Integer> fixedLine = new ArrayList<>(line);
+        quickSort(rules, fixedLine, 0, line.size() - 1);
+        return fixedLine;
+    }
+
+
+    private static void quickSort(final List<IntegerTupel> rules, List<Integer> list, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(rules, list, low, high);
+            quickSort(rules, list, low, pivotIndex - 1);
+            quickSort(rules, list, pivotIndex + 1, high);
+        }
+    }
+
+    private static int partition(final List<IntegerTupel> rules, List<Integer> list, int low, int high) {
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (checkRulesForSwap(rules, list.get(j), list.get(high))) {
+                i++;
+                swap(list, i, j);
             }
-            return 0;
-        }).toList();
+        }
+        swap(list, i + 1, high);
+        return i + 1;
+    }
+
+    private static boolean checkRulesForSwap(final List<IntegerTupel> rules, final int first, final  int second) {
+        for (IntegerTupel rule : rules) {
+            if (rule.getFirst() == first && rule.getSecond() == second) {
+                return false;
+            }
+            if (rule.getFirst() == second && rule.getSecond() == first) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void swap(List<Integer> list, int i, int j) {
+        int temp = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, temp);
     }
 
     private static boolean testRules(final List<IntegerTupel> rules, final List<Integer> line) {
