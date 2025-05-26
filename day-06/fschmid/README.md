@@ -1,0 +1,3 @@
+- Install latest Deno
+- Run `deno install`
+- Run `deno run dev`
