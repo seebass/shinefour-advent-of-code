@@ -1,8 +1,4 @@
-from contextlib import suppress
-from functools import cmp_to_key
-from itertools import chain
 from math import floor
-from random import shuffle
 from input import rules, page_nrs
 from rules import Rule
 
