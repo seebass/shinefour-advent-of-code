@@ -42,12 +42,42 @@ public class LinkedNode<T> {
         return pre != null;
     }
 
+    public void addBefore(T value) {
+        final LinkedNode<T> newNode = new LinkedNode<>(this, this.pre, value);
+        if (this.pre != null) {
+            this.pre.setNext(newNode);
+        }
+        this.setPre(newNode);
+    }
+
     public void addAfter(T value) {
         final LinkedNode<T> newNode = new LinkedNode<>(this.next, this, value);
         if (this.next != null) {
             this.next.setPre(newNode);
         }
         this.setNext(newNode);
+    }
+
+    public LinkedNode<T> getFirst() {
+        LinkedNode<T> current = this;
+
+        while (current.getPre() != null) {
+            current = current.getPre();
+        }
+
+        return current;
+    }
+
+    public int getSize() {
+        int size = 0;
+        LinkedNode<T> current = getFirst();
+
+        while (current != null) {
+            size++;
+            current = current.getNext();
+        }
+
+        return size;
     }
 
 }
